@@ -6,3 +6,5 @@ const router = Router()
 router.get('/Get', getPatient);
 
 router.post('/Post', postPatient);
+
+export default router
