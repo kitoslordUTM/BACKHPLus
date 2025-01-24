@@ -1,6 +1,7 @@
 import express, { urlencoded } from 'express';
 import UserRoutes from './routes/user.routes';
 import MedicRoutes from './routes/medic.routes'
+import PatientRoutes from './routes/patient.routes';
 import morgan from 'morgan';
 
 const expressApp = express();
@@ -15,5 +16,6 @@ expressApp.use(express.json());
 
 expressApp.use('/User', UserRoutes);
 expressApp.use('/Medic', MedicRoutes);
+expressApp.use('/Patient', PatientRoutes);
 
 export default expressApp;
