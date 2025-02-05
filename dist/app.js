@@ -8,6 +8,7 @@ exports["default"] = void 0;
 var _express = _interopRequireWildcard(require("express"));
 var _user = _interopRequireDefault(require("./routes/user.routes"));
 var _medic = _interopRequireDefault(require("./routes/medic.routes"));
+var _patient = _interopRequireDefault(require("./routes/patient.routes"));
 var _morgan = _interopRequireDefault(require("morgan"));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
@@ -25,4 +26,5 @@ expressApp.use(_express["default"].json());
 
 expressApp.use('/User', _user["default"]);
 expressApp.use('/Medic', _medic["default"]);
+expressApp.use('/Patient', _patient["default"]);
 var _default = exports["default"] = expressApp;
