@@ -1,5 +1,6 @@
 import express, { urlencoded } from 'express';
 import UserRoutes from './routes/user.routes';
+import cors from 'cors'
 import MedicRoutes from './routes/medic.routes'
 import PatientRoutes from './routes/patient.routes';
 import morgan from 'morgan';
