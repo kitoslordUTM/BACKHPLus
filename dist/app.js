@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _express = _interopRequireWildcard(require("express"));
 var _user = _interopRequireDefault(require("./routes/user.routes"));
+var _cors = _interopRequireDefault(require("cors"));
 var _medic = _interopRequireDefault(require("./routes/medic.routes"));
 var _patient = _interopRequireDefault(require("./routes/patient.routes"));
 var _morgan = _interopRequireDefault(require("morgan"));
@@ -17,7 +18,7 @@ var expressApp = (0, _express["default"])();
 
 //midlewares
 expressApp.use((0, _morgan["default"])('dev'));
-expressApp.use(cors());
+expressApp.use((0, _cors["default"])());
 expressApp.use((0, _express.urlencoded)({
   extended: false
 }));
