@@ -9,6 +9,7 @@ const expressApp = express();
 
 //midlewares
 expressApp.use(morgan('dev'));  
+expressApp.use(cors());
 expressApp.use(urlencoded({extended: false}));
 expressApp.use(express.json());
 

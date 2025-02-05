@@ -17,6 +17,7 @@ var expressApp = (0, _express["default"])();
 
 //midlewares
 expressApp.use((0, _morgan["default"])('dev'));
+expressApp.use(cors());
 expressApp.use((0, _express.urlencoded)({
   extended: false
 }));
