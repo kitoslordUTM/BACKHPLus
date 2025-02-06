@@ -1,25 +1,43 @@
-import { Schema, model } from "mongoose";
+// models/user.model.js
+import { Schema, model } from 'mongoose';
 
-const user = new Schema ({
-    name: {
-        type: String,
-        required: true,
-        trim: true
-    },
+const userSchema = new Schema(
+  {
     email: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      minLength:[ 5, 'Email must have 5 characters!'],
+      lowercase: true
     },
     password: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    verified:{
+        type: Boolean,
+        default: false
+    },
+    verficationCodeValidation:{
         type: String,
-        required: true,
-        trim: true
+        select: false
+    },
+    forgotPasswordCode:{
+        type: String,
+        select: false
+    },
+    forgotPasswordCodeValidation:{
+        type: Number,
+        select: false
     }
-}, {
+  },
+  {
     timestamps: true
-})
+  }
+);
 
 
-export default model('User', user);
+// Exportar el modelo
+export default model('User', userSchema);

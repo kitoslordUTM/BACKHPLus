@@ -1,44 +1,19 @@
-import { model, Schema } from "mongoose"
+// models/doctor.model.js
+import { Schema, model } from 'mongoose';
 
+const doctorSchema = new Schema(
+  {
+    name: { type: String, required: true },
+    lastname: { type: String, required: true },
+    age: { type: Number, required: true },
+    speciality: { type: String, required: true },
+    telephone: { type: Number, required: true },
+    direction: { type: String, required: true },
+    consultory: { type: String, required: true },
+    user: { type: Schema.Types.ObjectId, ref: 'User' },  // Relación con Usuario
+    pacientes: [{ patientId: { type: Schema.Types.ObjectId, ref: 'Patient' } }],
+  },
+  { timestamps: true }
+);
 
-const medic = new Schema ({
-    name: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    lastname: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    age: {
-        type: Number,
-        required: true,
-        trim: true
-    },
-    speciality :{
-        type: String,
-        required: true,
-        trim: true
-    },
-    telephone: {
-        type: Number,
-        required: true, 
-        trim: true
-      },
-    direction: {
-        type: String,
-        required: true,
-        trim: true
-      },
-      consultory: {
-        type: String,
-        required: true,
-        trim: true 
-      }
-}, {
-    timestamps: true
-})
-
-export default model('Medic', medic);
+export default model('Doctor', doctorSchema);

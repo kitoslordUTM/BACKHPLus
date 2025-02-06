@@ -5,43 +5,49 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _mongoose = require("mongoose");
-var medic = new _mongoose.Schema({
+// models/doctor.model.js
+
+var doctorSchema = new _mongoose.Schema({
   name: {
     type: String,
-    required: true,
-    trim: true
+    required: true
   },
   lastname: {
     type: String,
-    required: true,
-    trim: true
+    required: true
   },
   age: {
     type: Number,
-    required: true,
-    trim: true
+    required: true
   },
   speciality: {
     type: String,
-    required: true,
-    trim: true
+    required: true
   },
   telephone: {
     type: Number,
-    required: true,
-    trim: true
+    required: true
   },
   direction: {
     type: String,
-    required: true,
-    trim: true
+    required: true
   },
   consultory: {
     type: String,
-    required: true,
-    trim: true
-  }
+    required: true
+  },
+  user: {
+    type: _mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  // Relación con Usuario
+  pacientes: [{
+    patientId: {
+      type: _mongoose.Schema.Types.ObjectId,
+      ref: 'Patient'
+    }
+  }]
 }, {
   timestamps: true
 });
-var _default = exports["default"] = (0, _mongoose.model)('Medic', medic);
+var _default = exports["default"] = (0, _mongoose.model)('Doctor', doctorSchema);
