@@ -100,6 +100,11 @@ export const signIn = async (req, res) => {
       .json({
         token,
         message: "te logueaste",
+        user: {
+          // Puedes incluir información del usuario creado (sin la contraseña)
+          email:  existingUser.email,
+          id:  existingUser._id
+        },
       });
   } catch (error) {}
 };

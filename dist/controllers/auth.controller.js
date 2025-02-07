@@ -156,7 +156,12 @@ var signIn = exports.signIn = /*#__PURE__*/function () {
             secure: process.env.NODE_ENV === "production"
           }).json({
             token: token,
-            message: "te logueaste"
+            message: "te logueaste",
+            user: {
+              // Puedes incluir información del usuario creado (sin la contraseña)
+              email: existingUser.email,
+              id: existingUser._id
+            }
           });
           _context2.next = 21;
           break;
