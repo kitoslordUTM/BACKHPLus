@@ -40,6 +40,7 @@ export const signup = async (req, res) => {
       user: {
         // Puedes incluir información del usuario creado (sin la contraseña)
         email: result.email,
+        id: result._id
         // ... otros campos que quieras enviar
       },
     });

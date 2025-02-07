@@ -1,40 +1,91 @@
-import patientModel from "../models/patient.model";
+import Patient from "../models/patient.model";
 
+// Obtener pacientes con búsqueda opcional y populando doctor y usuario
+export const getPatients = async (req, res) => {
+  try {
+    const { searchTerm } = req.query;
+    let query = {};
 
-export const getPatient = async (req, res) => {
-    const patient = await patientModel.find();
-    res.json(patient);
-}
-
-
-
-export const postPatient = async (req, res) => {
-    try {
-      const { name, lastname, age, gender, telephone, direction, condition } = req.body;
-      // Validar que todos los campos requeridos están presentes
-      if (!name || !lastname || !age || !gender || !telephone || !direction || !condition) {
-        return res.status(400).json({ message: 'All fields are required' });
-      }
-      // Crear un nuevo paciente
-      const newPatient = new patientModel({
-        name,
-        lastname,
-        age,
-        gender,
-        telephone,
-        direction,
-        condition,
-      });
-      // Guardar el paciente en la base de datos
-      await newPatient.save();
-      // Respuesta exitosa
-      res.status(201).json({
-        message: 'Patient created successfully',
-        patient: newPatient,
-      });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error creating patient', error: error.message });
+    if (searchTerm) {
+      query = {
+        $or: [
+          { name: { $regex: searchTerm, $options: "i" } },
+          { lastname: { $regex: searchTerm, $options: "i" } },
+        ],
+      };
     }
-  };
 
+    const patients = await Patient.find(query)
+      .populate("user", "name lastname email") // Traer información del usuario
+      .populate("doctor", "name lastname speciality"); // Traer información del doctor
+
+    res.json(patients);
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving patients", error: error.message });
+  }
+};
+
+// Crear un nuevo paciente asociado a un usuario y a un doctor
+export const postPatient = async (req, res) => {
+  try {
+    const { name, lastname, age, gender, telephone, direction, condition, user, doctor } = req.body;
+
+    if (!name || !lastname || !age || !gender || !telephone || !direction || !condition || !user ) {
+      return res.status(400).json({ message: "All fields are required, including user and doctor" });
+    }
+
+    const newPatient = new Patient({
+      name,
+      lastname,
+      age,
+      gender,
+      telephone,
+      direction,
+      condition,
+      user,
+      doctor, // Relacionar con un doctor
+    });
+
+    await newPatient.save();
+
+    res.status(201).json({
+      message: "Patient created successfully",
+      patient: newPatient,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error creating patient", error: error.message });
+  }
+};
+
+
+// Actualizar paciente parcialmente
+export const updatePatient = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updates = req.body;
+
+    // Buscar al paciente
+    const patient = await Patient.findById(id);
+    if (!patient) {
+      return res.status(404).json({ message: "Patient not found" });
+    }
+
+    // Si se envía un doctor y el paciente no tiene, se añade
+    if (updates.doctor && !patient.doctor) {
+      patient.doctor = updates.doctor;
+    }
+
+    // Actualizar solo los campos enviados en req.body
+    Object.assign(patient, updates);
+
+    // Guardar cambios
+    await patient.save();
+
+    res.json({
+      message: "Patient updated successfully",
+      patient,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error updating patient", error: error.message });
+  }
+};

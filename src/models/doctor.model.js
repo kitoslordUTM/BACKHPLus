@@ -1,4 +1,3 @@
-// models/doctor.model.js
 import { Schema, model } from 'mongoose';
 
 const doctorSchema = new Schema(
@@ -7,11 +6,11 @@ const doctorSchema = new Schema(
     lastname: { type: String, required: true },
     age: { type: Number, required: true },
     speciality: { type: String, required: true },
-    telephone: { type: Number, required: true },
+    telephone: { type: String, required: true },
     direction: { type: String, required: true },
     consultory: { type: String, required: true },
-    user: { type: Schema.Types.ObjectId, ref: 'User' },  // Relación con Usuario
-    pacientes: [{ patientId: { type: Schema.Types.ObjectId, ref: 'Patient' } }],
+    user: { type: Schema.Types.ObjectId, ref: 'User', required: true }, // Relación con Usuario
+    pacientes: [{ type: Schema.Types.ObjectId, ref: 'Patient' }] // Relación con Pacientes
   },
   { timestamps: true }
 );

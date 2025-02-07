@@ -1,17 +1,17 @@
 import { Router } from "express";
-import { getMedic, postMedic, deleteMedic, putMedic } from "../controllers/medic.controller";
+import { getMedic, deleteMedic, updateDoctor, getDoctorPatients } from "../controllers/medic.controller";
+import { postDoctor } from "../controllers/medic.controller";
 
 const router = Router()
 
 router.get('/Get', getMedic);
 
-router.post('/Post', postMedic);
-
-router.put('/Put/:id',  putMedic   );
+router.post('/Post', postDoctor);
 
 router.delete('/Delete/:id', deleteMedic );
 
-router.patch('/Patch/:id');
+router.patch('/Patch/:id', updateDoctor);
 
+router.get('/Get/:id/Patients', getDoctorPatients)
 
 export default router

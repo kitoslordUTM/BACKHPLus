@@ -69,7 +69,8 @@ var signup = exports.signup = /*#__PURE__*/function () {
             // Mensaje más descriptivo
             user: {
               // Puedes incluir información del usuario creado (sin la contraseña)
-              email: result.email
+              email: result.email,
+              id: result._id
               // ... otros campos que quieras enviar
             }
           });
