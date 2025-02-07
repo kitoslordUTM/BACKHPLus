@@ -12,4 +12,5 @@ router.post('/Post', _medic.postDoctor);
 router["delete"]('/Delete/:id', _medic.deleteMedic);
 router.patch('/Patch/:id', _medic.updateDoctor);
 router.get('/Get/:id/Patients', _medic.getDoctorPatients);
+router.get('/User/:userId', _medic.getDoctorByUserId);
 var _default = exports["default"] = router;

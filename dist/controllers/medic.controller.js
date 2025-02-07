@@ -4,7 +4,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateDoctor = exports.postDoctor = exports.getMedic = exports.getDoctorPatients = exports.deleteMedic = void 0;
+exports.updateDoctor = exports.postDoctor = exports.getMedic = exports.getDoctorPatients = exports.getDoctorByUserId = exports.deleteMedic = void 0;
 var _doctor = _interopRequireDefault(require("../models/doctor.model"));
 var _patient = _interopRequireDefault(require("../models/patient.model"));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
@@ -256,5 +256,47 @@ var getDoctorPatients = exports.getDoctorPatients = /*#__PURE__*/function () {
   }));
   return function getDoctorPatients(_x9, _x10) {
     return _ref5.apply(this, arguments);
+  };
+}();
+var getDoctorByUserId = exports.getDoctorByUserId = /*#__PURE__*/function () {
+  var _ref6 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6(req, res) {
+    var userId, doctor;
+    return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+      while (1) switch (_context6.prev = _context6.next) {
+        case 0:
+          _context6.prev = 0;
+          userId = req.params.userId; // Buscar el doctor por el userId y poblar la relación con pacientes
+          _context6.next = 4;
+          return _doctor["default"].findOne({
+            user: userId
+          }).populate('pacientes');
+        case 4:
+          doctor = _context6.sent;
+          if (doctor) {
+            _context6.next = 7;
+            break;
+          }
+          return _context6.abrupt("return", res.status(404).json({
+            message: "Doctor no encontrado"
+          }));
+        case 7:
+          res.json(doctor);
+          _context6.next = 14;
+          break;
+        case 10:
+          _context6.prev = 10;
+          _context6.t0 = _context6["catch"](0);
+          console.error("Error al obtener el doctor:", _context6.t0);
+          res.status(500).json({
+            message: "Error en el servidor"
+          });
+        case 14:
+        case "end":
+          return _context6.stop();
+      }
+    }, _callee6, null, [[0, 10]]);
+  }));
+  return function getDoctorByUserId(_x11, _x12) {
+    return _ref6.apply(this, arguments);
   };
 }();
