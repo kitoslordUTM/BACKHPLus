@@ -108,3 +108,22 @@ export const getPatientByUserId = async (req, res) => {
     res.status(500).json({ message: "Error en el servidor" });
   }
 };
+
+
+export const getDoctorPatientByUserId = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    // Buscar el paciente por userId y popular la información del doctor
+    const patient = await Patient.findOne({ user: userId }).populate("doctor");
+
+    if (!patient) {
+      return res.status(404).json({ message: "Patient not found for this user" });
+    }
+
+    res.status(200).json(patient);
+  } catch (error) {
+    console.error("Error fetching patient by userId:", error);
+    res.status(500).json({ message: "Internal server error", error: error.message });
+  }
+};
