@@ -9,7 +9,6 @@ router.get('/Get', getPatients);
 
 router.post('/Post', postPatient);
 
-
 router.patch("/Patch/:id", updatePatient); 
 
 router.get('/User/:userId', getPatientByUserId)

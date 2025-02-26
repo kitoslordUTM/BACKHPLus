@@ -4,6 +4,7 @@ import AuthRoutes from './routes/auth.routes'
 import cors from 'cors'
 import MedicRoutes from './routes/medic.routes'
 import PatientRoutes from './routes/patient.routes';
+import MeditionRoutes from './routes/userMedition.routes'
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
@@ -25,5 +26,6 @@ expressApp.use('/User', UserRoutes);
 expressApp.use('/Medic', MedicRoutes);
 expressApp.use('/Patient', PatientRoutes);
 expressApp.use('/Auth', AuthRoutes);
+expressApp.use('/Medition', MeditionRoutes);
 
 export default expressApp;

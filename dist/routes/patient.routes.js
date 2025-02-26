@@ -13,6 +13,3 @@ router.patch("/Patch/:id", _patient.updatePatient);
 router.get('/User/:userId', _patient.getPatientByUserId);
 router.get('/User/Doctor/:userId', _patient.getDoctorPatientByUserId);
 var _default = exports["default"] = router;
-
-
-//hola brp
