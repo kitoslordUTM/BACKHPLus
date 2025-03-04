@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _mongoose = require("mongoose");
-var userSchema = new _mongoose.Schema({
+var userMeditionSchema = new _mongoose.Schema({
   meditionName: {
     type: String,
     required: true,
@@ -19,12 +19,12 @@ var userSchema = new _mongoose.Schema({
     type: Date,
     required: true
   },
-  user: {
+  patient: {
     type: _mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'Patient',
+    // referencia al modelo 'Patient'
+    required: true
   }
 });
-
-// Exportar el modelo
-var UserMedition = (0, _mongoose.model)('UserMedition', userSchema);
+var UserMedition = (0, _mongoose.model)('UserMedition', userMeditionSchema);
 var _default = exports["default"] = UserMedition;

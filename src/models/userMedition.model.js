@@ -1,26 +1,25 @@
 import { Schema, model } from 'mongoose';
 
-const userSchema = new Schema({
-    meditionName: { 
-        type: String,
-        required: true,
-        trim: true
-    },
-    value: {
-        type: Number,
-        required: true
-    },
-    date: {
-        type: Date,
-        required: true
-    },
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        
-    }
+const userMeditionSchema = new Schema({
+  meditionName: { 
+    type: String,
+    required: true,
+    trim: true
+  },
+  value: {
+    type: Number,
+    required: true
+  },
+  date: {
+    type: Date,
+    required: true
+  },
+  patient: {
+    type: Schema.Types.ObjectId,
+    ref: 'Patient', // referencia al modelo 'Patient'
+    required: true
+  }
 });
 
-// Exportar el modelo
-const UserMedition = model('UserMedition', userSchema);
+const UserMedition = model('UserMedition', userMeditionSchema);
 export default UserMedition;
