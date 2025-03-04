@@ -49,20 +49,26 @@ export const postDoctor = async (req, res) => {
 
 export const updateDoctor = async (req, res) => {
   const { id } = req.params;
-  const updates = req.body;
+  const { pacientes } = req.body; // Suponiendo que req.body.pacientes es un array de IDs
 
   try {
-      const updatedDoctor = await doctorModel.findByIdAndUpdate(id, updates, { new: true, runValidators: true });
+    const updatedDoctor = await doctorModel.findByIdAndUpdate(
+      id,
+      { $addToSet: { pacientes: { $each: pacientes } } }, // Agrega múltiples pacientes sin duplicados
+      { new: true, runValidators: true }
+    );
 
-      if (!updatedDoctor) {
-          return res.status(404).json({ message: 'Doctor no encontrado' });
-      }
+    if (!updatedDoctor) {
+      return res.status(404).json({ message: 'Doctor no encontrado' });
+    }
 
-      res.json(updatedDoctor);
+    res.json(updatedDoctor);
   } catch (error) {
-      res.status(500).json({ message: 'Error al actualizar el doctor', error: error.message });
+    res.status(500).json({ message: 'Error al actualizar el doctor', error: error.message });
   }
 };
+
+
 
 // ctrl } para comentar
 

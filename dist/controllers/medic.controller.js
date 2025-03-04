@@ -103,15 +103,23 @@ var postDoctor = exports.postDoctor = /*#__PURE__*/function () {
 }();
 var updateDoctor = exports.updateDoctor = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(req, res) {
-    var id, updates, updatedDoctor;
+    var id, pacientes, updatedDoctor;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
           id = req.params.id;
-          updates = req.body;
+          pacientes = req.body.pacientes; // Suponiendo que req.body.pacientes es un array de IDs
           _context3.prev = 2;
           _context3.next = 5;
-          return _doctor["default"].findByIdAndUpdate(id, updates, {
+          return _doctor["default"].findByIdAndUpdate(id, {
+            $addToSet: {
+              pacientes: {
+                $each: pacientes
+              }
+            }
+          },
+          // Agrega múltiples pacientes sin duplicados
+          {
             "new": true,
             runValidators: true
           });
