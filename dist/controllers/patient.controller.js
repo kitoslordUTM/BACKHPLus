@@ -230,7 +230,13 @@ var getDoctorPatientByUserId = exports.getDoctorPatientByUserId = /*#__PURE__*/f
           _context5.next = 4;
           return _patient["default"].findOne({
             user: userId
-          }).populate("doctor");
+          }).populate({
+            path: 'doctor',
+            // Aquí estamos populando la información del doctor
+            populate: {
+              path: 'user'
+            } // Y aquí estamos populando la información del usuario dentro del doctor
+          });
         case 4:
           patient = _context5.sent;
           if (patient) {
