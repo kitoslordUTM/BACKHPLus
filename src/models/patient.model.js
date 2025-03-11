@@ -9,6 +9,8 @@ const patientSchema = new Schema(
     telephone: { type: String, required: true, trim: true },
     direction: { type: String, required: true, trim: true },
     condition: { type: String, required: true, trim: true },
+    rescueNumberOne: { type: Number, required: true, trim: true },
+    rescueNumberTwo: { type: Number, required: true, trim: true },
     user: { type: Schema.Types.ObjectId, ref: "User", required: true }, // Relación con Usuario
     doctor: { type: Schema.Types.ObjectId, ref: "Doctor" } // Relación con Doctor
   },

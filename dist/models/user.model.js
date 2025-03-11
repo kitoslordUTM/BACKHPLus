@@ -36,6 +36,10 @@ var userSchema = new _mongoose.Schema({
   forgotPasswordCodeValidation: {
     type: Number,
     select: false
+  },
+  notificationToken: {
+    type: String,
+    trim: true
   }
 }, {
   timestamps: true

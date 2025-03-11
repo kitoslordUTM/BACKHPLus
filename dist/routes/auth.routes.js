@@ -11,4 +11,5 @@ router.post('/signUp', _auth.signup);
 router.post('/signIn', _auth.signIn);
 router.post('/signOut', _auth.signOut);
 router.patch('/verify', _auth.sendVerficationCode);
+router.patch('/Update/:userId', _auth.updateUser);
 var _default = exports["default"] = router;

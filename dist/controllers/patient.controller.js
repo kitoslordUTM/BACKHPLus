@@ -66,13 +66,13 @@ var getPatients = exports.getPatients = /*#__PURE__*/function () {
 // Crear un nuevo paciente asociado a un usuario y a un doctor
 var postPatient = exports.postPatient = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(req, res) {
-    var _req$body, name, lastname, age, gender, telephone, direction, condition, user, doctor, newPatient;
+    var _req$body, name, lastname, age, gender, telephone, direction, condition, rescueNumberOne, rescueNumberTwo, user, doctor, newPatient;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
           _context2.prev = 0;
-          _req$body = req.body, name = _req$body.name, lastname = _req$body.lastname, age = _req$body.age, gender = _req$body.gender, telephone = _req$body.telephone, direction = _req$body.direction, condition = _req$body.condition, user = _req$body.user, doctor = _req$body.doctor;
-          if (!(!name || !lastname || !age || !gender || !telephone || !direction || !condition || !user)) {
+          _req$body = req.body, name = _req$body.name, lastname = _req$body.lastname, age = _req$body.age, gender = _req$body.gender, telephone = _req$body.telephone, direction = _req$body.direction, condition = _req$body.condition, rescueNumberOne = _req$body.rescueNumberOne, rescueNumberTwo = _req$body.rescueNumberTwo, user = _req$body.user, doctor = _req$body.doctor;
+          if (!(!name || !lastname || !age || !gender || !telephone || !direction || !rescueNumberOne || !rescueNumberTwo || !condition || !user)) {
             _context2.next = 4;
             break;
           }
@@ -88,6 +88,8 @@ var postPatient = exports.postPatient = /*#__PURE__*/function () {
             telephone: telephone,
             direction: direction,
             condition: condition,
+            rescueNumberOne: rescueNumberOne,
+            rescueNumberTwo: rescueNumberTwo,
             user: user,
             doctor: doctor // Relacionar con un doctor
           });

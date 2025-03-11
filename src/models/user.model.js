@@ -31,6 +31,10 @@ const userSchema = new Schema(
     forgotPasswordCodeValidation:{
         type: Number,
         select: false
+    },
+    notificationToken:{
+      type: String,
+      trim: true
     }
   },
   {

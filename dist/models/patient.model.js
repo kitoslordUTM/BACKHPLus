@@ -40,6 +40,16 @@ var patientSchema = new _mongoose.Schema({
     required: true,
     trim: true
   },
+  rescueNumberOne: {
+    type: Number,
+    required: true,
+    trim: true
+  },
+  rescueNumberTwo: {
+    type: Number,
+    required: true,
+    trim: true
+  },
   user: {
     type: _mongoose.Schema.Types.ObjectId,
     ref: "User",

@@ -28,9 +28,9 @@ export const getPatients = async (req, res) => {
 // Crear un nuevo paciente asociado a un usuario y a un doctor
 export const postPatient = async (req, res) => {
   try {
-    const { name, lastname, age, gender, telephone, direction, condition, user, doctor } = req.body;
+    const { name, lastname, age, gender, telephone, direction, condition, rescueNumberOne, rescueNumberTwo, user, doctor } = req.body;
 
-    if (!name || !lastname || !age || !gender || !telephone || !direction || !condition || !user ) {
+    if (!name || !lastname || !age || !gender || !telephone || !direction || !rescueNumberOne||        !rescueNumberTwo || !condition || !user ) {
       return res.status(400).json({ message: "All fields are required, including user and doctor" });
     }
 
@@ -42,6 +42,8 @@ export const postPatient = async (req, res) => {
       telephone,
       direction,
       condition,
+      rescueNumberOne,
+      rescueNumberTwo,
       user,
       doctor, // Relacionar con un doctor
     });

@@ -6,7 +6,7 @@ import { doHash, doHashValidation } from "../utils/hashing";
 import jwt from "jsonwebtoken";
 
 export const signup = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, notificationToken } = req.body;
 
   try {
     const { error, value } = signupSchema.validate({ email, password });
@@ -31,6 +31,7 @@ export const signup = async (req, res) => {
     const newUser = new userModel({
       email,
       password: hashedPassword,
+      notificationToken
     });
 
     const result = await newUser.save();
@@ -40,7 +41,8 @@ export const signup = async (req, res) => {
       user: {
         // Puedes incluir información del usuario creado (sin la contraseña)
         email: result.email,
-        id: result._id
+        id: result._id,
+        token: result.notificationToken
         // ... otros campos que quieras enviar
       },
     });
@@ -167,3 +169,43 @@ export const sendVerficationCode = async (req, res ) => {
 
 }
 
+ 
+
+export const updateUser = async (req, res) => {
+  const { userId } = req.params; // Obtiene el ID desde los parámetros
+  const updates = req.body; // Obtiene los datos a actualizar
+
+  try {
+    const existingUser = await userModel.findById(userId);
+
+    if (!existingUser) {
+      return res.status(404).json({ success: false, message: "User not found!" });
+    }
+
+    // 🔹 Evita modificar directamente la contraseña (debe tener un proceso separado)
+    if (updates.password) {
+      return res.status(400).json({ success: false, message: "Use a password update endpoint!" });
+    }
+
+    // 🔹 Actualiza solo los campos enviados en `req.body`
+    Object.keys(updates).forEach((key) => {
+      existingUser[key] = updates[key];
+    });
+
+    await existingUser.save();
+
+    res.status(200).json({
+      success: true,
+      message: "User updated successfully!",
+      user: {
+        email: existingUser.email,
+        id: existingUser._id,
+        verified: existingUser.verified,
+        ...updates, // Muestra los campos actualizados
+      },
+    });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
