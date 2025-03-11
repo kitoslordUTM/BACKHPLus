@@ -117,7 +117,11 @@ export const getDoctorPatientByUserId = async (req, res) => {
     const { userId } = req.params;
 
     // Buscar el paciente por userId y popular la información del doctor
-    const patient = await Patient.findOne({ user: userId }).populate("doctor");
+    const patient = await Patient.findOne({ user: userId })
+    .populate({
+      path: 'doctor', // Aquí estamos populando la información del doctor
+      populate: { path: 'user' } // Y aquí estamos populando la información del usuario dentro del doctor
+    });
 
     if (!patient) {
       return res.status(404).json({ message: "Patient not found for this user" });
