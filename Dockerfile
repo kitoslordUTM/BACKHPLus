@@ -21,4 +21,4 @@ RUN npm start
 EXPOSE 3000
 
 # Comando de inicio de la aplicación
-CMD ["node", "dist/index.js"]
+CMD ["node", "src/index.js"]
