@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+const fetch = (...args) => import('node-fetch').then((module) => module.default(...args));
 import cron from "node-cron";
 import Reminder from "../models/reminder.model"
 
