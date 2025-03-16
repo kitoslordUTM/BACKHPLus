@@ -4,7 +4,7 @@ import { mongodb_Uri } from './config/config';
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(mongodb_Uri);
+    await mongoose.connect("mongodb+srv://djjuliomex11:5vwygwzAV6lmeXQD@healtydb.kj6sv.mongodb.net/?retryWrites=true&w=majority&appName=HealtyDB");
     console.log("Database connected successfully");
   } catch (error) {
     console.error("Database connection failed", error);
