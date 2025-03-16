@@ -24,7 +24,9 @@ export const postReminder = async( req, res) => {
     await newReminder.save();
 
     cron.schedule(  cronExpression , async ()  => {
+     
         try {
+            console.log(`Ejecutando cron job a las ${Hour}:${Minute}`)
             const response = await fetch('https://exp.host/--/api/v2/push/send', {
               method: 'POST',
               headers: {
