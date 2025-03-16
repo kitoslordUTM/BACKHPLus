@@ -1,4 +1,3 @@
-
 # Imagen base oficial de Node.js
 FROM node:16-alpine
 
@@ -8,17 +7,14 @@ WORKDIR /app
 # Copiar los archivos package.json y package-lock.json
 COPY package*.json ./
 
-# Instalar las dependencias de producción
+# Instalar las dependencias
 RUN npm install
 
 # Copiar todo el código fuente al contenedor
 COPY . .
 
-# Transpilar el código fuente usando Babel
-RUN npm start
-
-# Exponer el puerto de la aplicación (cambia según sea necesario)
+# Exponer el puerto de la aplicación
 EXPOSE 3000
 
 # Comando de inicio de la aplicación
-CMD ["node", "src/index.js"]
+CMD ["npm", "start"]
