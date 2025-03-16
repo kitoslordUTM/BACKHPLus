@@ -7,6 +7,7 @@ import PatientRoutes from './routes/patient.routes';
 import MeditionRoutes from './routes/userMedition.routes'
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
+import ReminderRoutes from './routes/reminder.routes'
 import helmet from 'helmet';
 
 const expressApp = express();
@@ -27,6 +28,6 @@ expressApp.use('/Medic', MedicRoutes);
 expressApp.use('/Patient', PatientRoutes);
 expressApp.use('/Auth', AuthRoutes);
 expressApp.use('/Medition', MeditionRoutes);
-
+expressApp.use('/Reminder', ReminderRoutes);
 
 export default expressApp;

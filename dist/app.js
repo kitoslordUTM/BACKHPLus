@@ -14,6 +14,7 @@ var _patient = _interopRequireDefault(require("./routes/patient.routes"));
 var _userMedition = _interopRequireDefault(require("./routes/userMedition.routes"));
 var _morgan = _interopRequireDefault(require("morgan"));
 var _cookieParser = _interopRequireDefault(require("cookie-parser"));
+var _reminder = _interopRequireDefault(require("./routes/reminder.routes"));
 var _helmet = _interopRequireDefault(require("helmet"));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
@@ -37,4 +38,5 @@ expressApp.use('/Medic', _medic["default"]);
 expressApp.use('/Patient', _patient["default"]);
 expressApp.use('/Auth', _auth["default"]);
 expressApp.use('/Medition', _userMedition["default"]);
+expressApp.use('/Reminder', _reminder["default"]);
 var _default = exports["default"] = expressApp;
