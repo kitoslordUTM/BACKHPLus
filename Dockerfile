@@ -15,7 +15,7 @@ RUN npm install
 COPY . .
 
 # Transpilar el código fuente usando Babel
-RUN npm run build
+RUN npm start
 
 # Exponer el puerto de la aplicación (cambia según sea necesario)
 EXPOSE 3000
