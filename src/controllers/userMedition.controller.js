@@ -3,10 +3,10 @@ import UserMedition from "../models/userMedition.model";
 export const postPatientMedition = async (req, res) => { 
   try {
     // Ajusta el nombre de las propiedades según lo que envíes desde tu frontend
-    const { meditionName, value, date, patient } = req.body;
+    const { meditionName, value, patient } = req.body;
 
     // Validar campos requeridos
-    if (!meditionName || !value || !date || !patient) {
+    if (!meditionName || !value || !patient) {
       return res.status(400).json({ message: "All fields are required, including patient" });
     }
 
@@ -14,7 +14,6 @@ export const postPatientMedition = async (req, res) => {
     const newMedition = new UserMedition({
       meditionName,
       value,
-      date,
       patient // Relaciona con un paciente
     });
 
@@ -29,15 +28,29 @@ export const postPatientMedition = async (req, res) => {
   }
 };
 
-
 export const getPatientMeditionsById = async (req, res) => {
-    try {
-      const { id } = req.params; // ID del paciente
-      const meditions = await UserMedition.find({ patient: id })
-        .populate("patient", "name lastname age"); // Solo los campos que quieras mostrar
-  
-      res.json(meditions);
-    } catch (error) {
-      res.status(500).json({ message: "Error retrieving meditions", error: error.message });
+  try {
+    const { id } = req.params; // ID del paciente
+    const { startDate } = req.query; // Fecha opcional desde query params
+
+    // Construimos el filtro de búsqueda
+    let filter = { patient: id };
+
+    // Si se proporciona `startDate`, filtramos desde esa fecha en adelante
+    if (startDate) {
+      filter.createdAt = { 
+        $gte: new Date(startDate) // Solo filtra desde `startDate` en adelante
+      };
     }
-  };
+
+    // Buscar mediciones con el filtro y poblar información del paciente
+    const meditions = await UserMedition.find(filter)
+      .populate("patient", "name lastname age") // Solo los campos que quieres mostrar
+      .sort({ createdAt: -1 }); // Ordenar de más reciente a más antiguo
+
+    res.json(meditions);
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving meditions", error: error.message });
+  }
+};
+

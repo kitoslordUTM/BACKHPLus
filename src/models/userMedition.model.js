@@ -10,16 +10,13 @@ const userMeditionSchema = new Schema({
     type: Number,
     required: true
   },
-  date: {
-    type: Date,
-    required: true
-  },
   patient: {
     type: Schema.Types.ObjectId,
     ref: 'Patient', // referencia al modelo 'Patient'
     required: true
-  }
-});
-
+    }
+  }, { timestamps: true });
+ 
+ 
 const UserMedition = model('UserMedition', userMeditionSchema);
 export default UserMedition;

@@ -12,14 +12,14 @@ function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 var postPatientMedition = exports.postPatientMedition = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(req, res) {
-    var _req$body, meditionName, value, date, patient, newMedition;
+    var _req$body, meditionName, value, patient, newMedition;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _context.prev = 0;
           // Ajusta el nombre de las propiedades según lo que envíes desde tu frontend
-          _req$body = req.body, meditionName = _req$body.meditionName, value = _req$body.value, date = _req$body.date, patient = _req$body.patient; // Validar campos requeridos
-          if (!(!meditionName || !value || !date || !patient)) {
+          _req$body = req.body, meditionName = _req$body.meditionName, value = _req$body.value, patient = _req$body.patient; // Validar campos requeridos
+          if (!(!meditionName || !value || !patient)) {
             _context.next = 4;
             break;
           }
@@ -31,7 +31,6 @@ var postPatientMedition = exports.postPatientMedition = /*#__PURE__*/function ()
           newMedition = new _userMedition["default"]({
             meditionName: meditionName,
             value: value,
-            date: date,
             patient: patient // Relaciona con un paciente
           });
           _context.next = 7;
@@ -62,35 +61,48 @@ var postPatientMedition = exports.postPatientMedition = /*#__PURE__*/function ()
 }();
 var getPatientMeditionsById = exports.getPatientMeditionsById = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(req, res) {
-    var id, meditions;
+    var id, startDate, filter, meditions;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
           _context2.prev = 0;
           id = req.params.id; // ID del paciente
-          _context2.next = 4;
-          return _userMedition["default"].find({
+          startDate = req.query.startDate; // Fecha opcional desde query params
+          // Construimos el filtro de búsqueda
+          filter = {
             patient: id
-          }).populate("patient", "name lastname age");
-        case 4:
+          }; // Si se proporciona `startDate`, filtramos desde esa fecha en adelante
+          if (startDate) {
+            filter.createdAt = {
+              $gte: new Date(startDate) // Solo filtra desde `startDate` en adelante
+            };
+          }
+
+          // Buscar mediciones con el filtro y poblar información del paciente
+          _context2.next = 7;
+          return _userMedition["default"].find(filter).populate("patient", "name lastname age") // Solo los campos que quieres mostrar
+          .sort({
+            createdAt: -1
+          });
+        case 7:
           meditions = _context2.sent;
-          // Solo los campos que quieras mostrar
+          // Ordenar de más reciente a más antiguo
 
           res.json(meditions);
-          _context2.next = 11;
+          _context2.next = 14;
           break;
-        case 8:
-          _context2.prev = 8;
+        case 11:
+          _context2.prev = 11;
           _context2.t0 = _context2["catch"](0);
           res.status(500).json({
             message: "Error retrieving meditions",
             error: _context2.t0.message
           });
-        case 11:
+        case 14:
         case "end":
           return _context2.stop();
       }
-    }, _callee2, null, [[0, 8]]);
+    }, _callee2, null, [[0, 11]]);
   }));
   return function getPatientMeditionsById(_x3, _x4) {
     return _ref2.apply(this, arguments);

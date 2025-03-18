@@ -18,7 +18,7 @@ var connectDB = /*#__PURE__*/function () {
         case 0:
           _context.prev = 0;
           _context.next = 3;
-          return _mongoose["default"].connect(_config.mongodb_Uri);
+          return _mongoose["default"].connect("mongodb+srv://djjuliomex11:5vwygwzAV6lmeXQD@healtydb.kj6sv.mongodb.net/?retryWrites=true&w=majority&appName=HealtyDB");
         case 3:
           console.log("Database connected successfully");
           _context.next = 10;

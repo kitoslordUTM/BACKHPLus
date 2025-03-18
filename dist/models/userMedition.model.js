@@ -15,16 +15,14 @@ var userMeditionSchema = new _mongoose.Schema({
     type: Number,
     required: true
   },
-  date: {
-    type: Date,
-    required: true
-  },
   patient: {
     type: _mongoose.Schema.Types.ObjectId,
     ref: 'Patient',
     // referencia al modelo 'Patient'
     required: true
   }
+}, {
+  timestamps: true
 });
 var UserMedition = (0, _mongoose.model)('UserMedition', userMeditionSchema);
 var _default = exports["default"] = UserMedition;
